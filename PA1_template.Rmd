@@ -88,7 +88,7 @@ with(da, plot(interval, steps, type = "l", col = "steelblue2", lwd = 2,
 ### Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```{r}
-interval <- da$interval[da$steps == max(da$steps)]
+interval <- da$interval[which.max(da$steps)]
 interval
 ```
 
@@ -172,11 +172,7 @@ _artificial_ days didn't change the median either.
 Let's annotate the data with "weekday" or "weekend" value.
 ```{r}
 wd <- weekdays(d2$date)
-weekend <- wd == 'Saturday' | wd == 'Sunday'
-wd[weekend] <- "weekend"
-wd[!weekend] <- "weekday"
-
-d2$day.kind <- factor(wd)
+d2$day.kind <- factor(ifelse(wd == 'Saturday' | wd == 'Sunday', 'weekend', 'weekday'))
 ```
 
 Plot daily activity on weekends and weekdays:

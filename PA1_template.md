@@ -45,7 +45,7 @@ print(xtable(hd), type="html")
 ```
 
 <!-- html table generated in R 3.2.1 by xtable 1.8-0 package -->
-<!-- Wed Jan  6 19:10:06 2016 -->
+<!-- Fri Jan  8 15:34:42 2016 -->
 <table border=1>
 <tr> <th>  </th> <th> date </th> <th> steps </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> 2012-10-02 </td> <td align="right"> 126 </td> </tr>
@@ -113,7 +113,7 @@ with(da, plot(interval, steps, type = "l", col = "steelblue2", lwd = 2,
 
 
 ```r
-interval <- da$interval[da$steps == max(da$steps)]
+interval <- da$interval[which.max(da$steps)]
 interval
 ```
 
@@ -238,11 +238,12 @@ Let's annotate the data with "weekday" or "weekend" value.
 
 ```r
 wd <- weekdays(d2$date)
-weekend <- wd == 'Saturday' | wd == 'Sunday'
-wd[weekend] <- "weekend"
-wd[!weekend] <- "weekday"
+#weekend <- wd == 'Saturday' | wd == 'Sunday'
+#wd[weekend] <- "weekend"
+#wd[!weekend] <- "weekday"
 
-d2$day.kind <- factor(wd)
+#d2$day.kind <- factor(wd)
+d2$day.kind <- factor(ifelse(wd == 'Saturday' | wd == 'Sunday', 'weekend', 'weekday'))
 ```
 
 Plot daily activity on weekends and weekdays:
